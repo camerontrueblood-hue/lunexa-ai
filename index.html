@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LUNEXA.AI</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #5e2ca5;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    textarea {
+      width: 80%;
+      height: 200px;
+      margin: 20px 0;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: white;
+      color: #5e2ca5;
+      border: none;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #output {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 10px;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+
+<svg width="100" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="40" fill="white" stroke="#5e2ca5" stroke-width="6"/>
+</svg>
+
+<h1>LUNEXA.AI</h1>
+<p>Paste your lecture transcript below</p>
+
+<textarea id="transcript" placeholder="Paste transcript here..."></textarea>
+<br>
+<button onclick="generatePrompt()">Generate Study Prompt</button>
+
+<div id="output"></div>
+
+<script>
+function generatePrompt() {
+  const text = document.getElementById("transcript").value;
+
+  const prompt = `
+From this lecture transcript:
+
+${text}
+
+Give me:
+- A detailed structured summary
+- 10 multiple choice quiz questions with answers
+- 10 flashcards (Q&A)
+- Key definitions
+- Possible test questions
+`;
+
+  document.getElementById("output").innerText = prompt;
+}
+</script>
+
+</body>
+</html>
