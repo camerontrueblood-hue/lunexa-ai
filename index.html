@@ -154,39 +154,41 @@ button:hover {
 </div>
 
 <script>
-function showOutput(text) {
-  document.getElementById("outputText").innerText = text;
-  document.getElementById("outputBox").style.display = "block";
+function openChatGPT(prompt) {
+  const encodedPrompt = encodeURIComponent(prompt);
+  const url = `https://chat.openai.com/?q=${encodedPrompt}`;
+  window.open(url, "_blank");
 }
 
 function generateSummary() {
   let text = document.getElementById("inputText").value;
   if (!text) return alert("Paste text first.");
-  showOutput("Summary:\n\n" + text.substring(0, 300) + "...");
+
+  let prompt = "Summarize the following transcript in clear, organized bullet points:\n\n" + text;
+  openChatGPT(prompt);
 }
 
 function generateFlashcards() {
   let text = document.getElementById("inputText").value;
   if (!text) return alert("Paste text first.");
-  showOutput("Flashcards:\n\n1. Key Idea?\nAnswer: " + text.substring(0,100) + "\n\n2. Important Concept?\nAnswer: ...");
+
+  let prompt = "Create detailed flashcards (Question and Answer format) from the following transcript:\n\n" + text;
+  openChatGPT(prompt);
 }
 
 function generateQuiz() {
   let text = document.getElementById("inputText").value;
   if (!text) return alert("Paste text first.");
-  showOutput("Quiz:\n\n1. What is the main topic?\nA) Option 1\nB) Option 2\nC) Option 3\n\n2. True or False: ...");
-}
 
-function copyOutput() {
-  let text = document.getElementById("outputText").innerText;
-  navigator.clipboard.writeText(text);
-  alert("Copied!");
+  let prompt = "Create a multiple choice quiz (10 questions with answers at the bottom) based on this transcript:\n\n" + text;
+  openChatGPT(prompt);
 }
 
 function toggleDarkMode() {
   document.body.classList.toggle("light-mode");
 }
 </script>
+
 
 </body>
 </html>
