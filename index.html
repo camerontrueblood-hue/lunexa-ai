@@ -13,16 +13,17 @@
     }
 
     textarea {
-      width: 80%;
+      width: 85%;
       height: 200px;
-      margin: 20px 0;
       padding: 10px;
       border-radius: 10px;
       border: none;
+      margin-top: 20px;
     }
 
     button {
       padding: 10px 20px;
+      margin: 10px;
       background: white;
       color: #5e2ca5;
       border: none;
@@ -37,9 +38,10 @@
       background: rgba(255,255,255,0.1);
       padding: 15px;
       border-radius: 10px;
-      width: 80%;
+      width: 85%;
       margin-left: auto;
       margin-right: auto;
+      text-align: left;
     }
   </style>
 </head>
@@ -54,27 +56,62 @@
 
 <textarea id="transcript" placeholder="Paste transcript here..."></textarea>
 <br>
-<button onclick="generatePrompt()">Generate Study Prompt</button>
+
+<button onclick="generateSummary()">Summary</button>
+<button onclick="generateQuiz()">Quiz</button>
+<button onclick="generateFlashcards()">Flashcards</button>
 
 <div id="output"></div>
 
 <script>
-function generatePrompt() {
-  const text = document.getElementById("transcript").value;
+function getText() {
+  return document.getElementById("transcript").value;
+}
 
+function generateSummary() {
   const prompt = `
 From this lecture transcript:
 
-${text}
+${getText()}
 
 Give me:
-- A detailed structured summary
-- 10 multiple choice quiz questions with answers
-- 10 flashcards (Q&A)
+- A very detailed structured summary
 - Key definitions
-- Possible test questions
+- Important concepts
+- Examples explained clearly
+- Possible test topics
 `;
+  document.getElementById("output").innerText = prompt;
+}
 
+function generateQuiz() {
+  const prompt = `
+From this lecture transcript:
+
+${getText()}
+
+Create:
+- 10 multiple choice questions
+- 4 answer choices each
+- Clearly mark the correct answer
+- Include short explanations for answers
+`;
+  document.getElementById("output").innerText = prompt;
+}
+
+function generateFlashcards() {
+  const prompt = `
+From this lecture transcript:
+
+${getText()}
+
+Create:
+- 12 flashcards
+- Format as:
+  Q: ...
+  A: ...
+- Focus on definitions, key ideas, and test material
+`;
   document.getElementById("output").innerText = prompt;
 }
 </script>
