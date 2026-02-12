@@ -2,90 +2,156 @@
 <html>
 <head>
   <title>LUNEXA.AI</title>
+
   <style>
+    :root {
+      --bg: #5e2ca5;
+      --card: rgba(255,255,255,0.08);
+      --text: white;
+      --accent: white;
+    }
+
+    body.dark {
+      --bg: #111;
+      --card: #1e1e1e;
+      --text: #f5f5f5;
+      --accent: #9b6bff;
+    }
+
     body {
-      font-family: Arial;
-      background: #5e2ca5;
-      color: white;
-      text-align: center;
       margin: 0;
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      text-align: center;
+      padding: 30px;
+      transition: 0.3s;
+      overflow-x: hidden;
+    }
+
+    /* Background Moon */
+    .bg-moon {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.05;
+      width: 500px;
+      z-index: -1;
+    }
+
+    h1 {
+      margin-top: 10px;
+      font-size: 40px;
     }
 
     textarea {
-      width: 85%;
+      width: 90%;
+      max-width: 800px;
       height: 200px;
-      padding: 10px;
-      border-radius: 10px;
+      padding: 15px;
+      border-radius: 12px;
       border: none;
+      margin-top: 20px;
+      font-size: 14px;
+      resize: vertical;
+    }
+
+    .buttons {
       margin-top: 20px;
     }
 
     button {
-      padding: 10px 20px;
-      margin: 10px;
-      background: white;
-      color: #5e2ca5;
+      padding: 10px 18px;
+      margin: 8px;
+      background: var(--accent);
+      color: var(--bg);
       border: none;
       font-weight: bold;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
     }
 
     #output {
-      margin-top: 20px;
-      white-space: pre-wrap;
-      background: rgba(255,255,255,0.1);
-      padding: 15px;
-      border-radius: 10px;
-      width: 85%;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 30px auto;
+      max-width: 800px;
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
       text-align: left;
+      white-space: pre-wrap;
+      min-height: 100px;
     }
+
+    .top-controls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
   </style>
 </head>
+
 <body>
 
-<svg width="100" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="40" fill="white" stroke="#5e2ca5" stroke-width="6"/>
+<!-- Background Moon -->
+<svg class="bg-moon" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="40"
+    fill="white"
+    stroke="#9b6bff"
+    stroke-width="6"/>
 </svg>
 
+<div class="top-controls">
+  <button onclick="toggleDarkMode()">Dark Mode</button>
+</div>
+
 <h1>LUNEXA.AI</h1>
-<p>Paste your lecture transcript below</p>
+<p>Turn lectures into mastery.</p>
 
-<textarea id="transcript" placeholder="Paste transcript here..."></textarea>
-<br>
+<textarea id="transcript" placeholder="Paste lecture transcript here..."></textarea>
 
-<button onclick="generateSummary()">Summary</button>
-<button onclick="generateQuiz()">Quiz</button>
-<button onclick="generateFlashcards()">Flashcards</button>
+<div class="buttons">
+  <button onclick="generateSummary()">Summary</button>
+  <button onclick="generateQuiz()">Quiz</button>
+  <button onclick="generateFlashcards()">Flashcards</button>
+  <button onclick="copyOutput()">Copy</button>
+</div>
 
 <div id="output"></div>
 
 <script>
+
 function getText() {
   return document.getElementById("transcript").value;
 }
 
+function setOutput(text) {
+  document.getElementById("output").innerText = text;
+}
+
 function generateSummary() {
-  const prompt = `
+  setOutput(`
 From this lecture transcript:
 
 ${getText()}
 
 Give me:
-- A very detailed structured summary
+- A detailed structured summary
 - Key definitions
 - Important concepts
-- Examples explained clearly
+- Clear explanations
 - Possible test topics
-`;
-  document.getElementById("output").innerText = prompt;
+`);
 }
 
 function generateQuiz() {
-  const prompt = `
+  setOutput(`
 From this lecture transcript:
 
 ${getText()}
@@ -93,27 +159,36 @@ ${getText()}
 Create:
 - 10 multiple choice questions
 - 4 answer choices each
-- Clearly mark the correct answer
-- Include short explanations for answers
-`;
-  document.getElementById("output").innerText = prompt;
+- Clearly mark correct answers
+- Include short explanations
+`);
 }
 
 function generateFlashcards() {
-  const prompt = `
+  setOutput(`
 From this lecture transcript:
 
 ${getText()}
 
 Create:
 - 12 flashcards
-- Format as:
-  Q: ...
-  A: ...
-- Focus on definitions, key ideas, and test material
-`;
-  document.getElementById("output").innerText = prompt;
+Format:
+Q: ...
+A: ...
+Focus on definitions and test material.
+`);
 }
+
+function copyOutput() {
+  const text = document.getElementById("output").innerText;
+  navigator.clipboard.writeText(text);
+  alert("Copied to clipboard!");
+}
+
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+}
+
 </script>
 
 </body>
