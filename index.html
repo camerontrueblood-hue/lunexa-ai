@@ -157,14 +157,14 @@ button:hover {
 function openChatGPT(prompt) {
   const encodedPrompt = encodeURIComponent(prompt);
   const url = `https://chat.openai.com/?q=${encodedPrompt}`;
-  window.open(url, "_blank");
+  window.open(url, "_blank"); // opens in a new tab
 }
 
 function generateSummary() {
   let text = document.getElementById("inputText").value;
   if (!text) return alert("Paste text first.");
-
-  let prompt = "Summarize the following transcript in clear, organized bullet points:\n\n" + text;
+  
+  let prompt = "Summarize the following transcript in detailed, structured bullet points:\n\n" + text;
   openChatGPT(prompt);
 }
 
@@ -172,7 +172,7 @@ function generateFlashcards() {
   let text = document.getElementById("inputText").value;
   if (!text) return alert("Paste text first.");
 
-  let prompt = "Create detailed flashcards (Question and Answer format) from the following transcript:\n\n" + text;
+  let prompt = "Create detailed flashcards (Q&A format) from this transcript:\n\n" + text;
   openChatGPT(prompt);
 }
 
@@ -188,6 +188,7 @@ function toggleDarkMode() {
   document.body.classList.toggle("light-mode");
 }
 </script>
+
 
 
 </body>
